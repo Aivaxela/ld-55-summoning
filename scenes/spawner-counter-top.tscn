@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://b68um5r25sksr"]
+
+[ext_resource type="Script" path="res://scripts/Spawner.cs" id="1_b4a4i"]
+
+[node name="spawner-counter-top" type="Marker2D" node_paths=PackedStringArray("timeUntilSpawnTimer")]
+script = ExtResource("1_b4a4i")
+spawnRateMin = 3
+spawnRateMax = 7
+timeUntilSpawnTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="."]

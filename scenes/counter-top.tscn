@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2uf6utspfbna"]
+
+[ext_resource type="Script" path="res://scripts/Obstacle.cs" id="1_6h8l2"]
+[ext_resource type="Texture2D" uid="uid://bro2cjarem0g4" path="res://images/counter-top.png" id="1_6wrxv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rq00q"]
+size = Vector2(450, 34)
+
+[node name="counter-top" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_6h8l2")
+speed = -300.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_6wrxv")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(232, 17)
+shape = SubResource("RectangleShape2D_rq00q")

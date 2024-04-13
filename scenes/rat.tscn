@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=3 uid="uid://cfg0otno8mxwe"]
+
+[ext_resource type="Script" path="res://scripts/Rat.cs" id="1_lngt0"]
+[ext_resource type="Texture2D" uid="uid://by57nd5ud1iit" path="res://images/rat.png" id="1_w4v0u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gwmm8"]
+size = Vector2(40, 18)
+
+[sub_resource type="Animation" id="Animation_xnkpd"]
+resource_name = "running"
+length = 0.2
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.261799, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.75, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u0dhf"]
+_data = {
+"running": SubResource("Animation_xnkpd")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_81gpg"]
+size = Vector2(40, 18)
+
+[node name="rat" type="CharacterBody2D" node_paths=PackedStringArray("area")]
+z_index = 1
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_lngt0")
+area = NodePath("Area2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_w4v0u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, 2)
+shape = SubResource("RectangleShape2D_gwmm8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_u0dhf")
+}
+autoplay = "running"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(4, 2)
+shape = SubResource("RectangleShape2D_81gpg")
+debug_color = Color(0.756863, 0.317647, 0.819608, 0.419608)
