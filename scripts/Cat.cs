@@ -32,7 +32,6 @@ public partial class Cat : CharacterBody2D
         if (IsOnFloor())
         {
             leftCeiling = false;
-            GD.Print("Setting vel to 0");
             velocity.Y = 0;
         }
         if (IsOnCeiling() && !leftCeiling)

@@ -11,7 +11,6 @@ public partial class Obstacle : CharacterBody2D
     public override void _Ready()
     {
         cat = GetNode<Cat>("/root/main/cat");
-
         if (couchJumpArea != null) couchJumpArea.AreaEntered += CouchJumpAreaEntered;
     }
 

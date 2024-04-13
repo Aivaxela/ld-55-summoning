@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://ppbt3vser848"]
+[gd_scene load_steps=9 format=3 uid="uid://ppbt3vser848"]
 
 [ext_resource type="Script" path="res://scripts/Main.cs" id="1_h1g2k"]
 [ext_resource type="PackedScene" uid="uid://d1643t4upp0yh" path="res://scenes/parallax-background.tscn" id="2_l6qu2"]
 [ext_resource type="PackedScene" uid="uid://cn8hhq82a72iv" path="res://scenes/cat.tscn" id="3_b5wxr"]
 [ext_resource type="PackedScene" uid="uid://c3wsfhd26dehs" path="res://scenes/spawner-rat.tscn" id="3_d62hk"]
 [ext_resource type="PackedScene" uid="uid://cfg0otno8mxwe" path="res://scenes/rat.tscn" id="3_n5fdx"]
-[ext_resource type="PackedScene" uid="uid://c2uf6utspfbna" path="res://scenes/counter-top.tscn" id="3_o3iws"]
 [ext_resource type="PackedScene" uid="uid://b68um5r25sksr" path="res://scenes/spawner-counter-top.tscn" id="4_q8dfg"]
 [ext_resource type="PackedScene" uid="uid://dcgralcjhhamn" path="res://scenes/couch.tscn" id="6_v0m3l"]
 
@@ -44,7 +43,7 @@ shape = SubResource("RectangleShape2D_73tsn")
 position = Vector2(768, 64)
 spawnRateMin = 2
 spawnRateMax = 5
-spawnScene = Array[PackedScene]([ExtResource("3_o3iws")])
+spawnScene = Array[PackedScene]([ExtResource("6_v0m3l")])
 
 [node name="spawner-rat" parent="spawners" instance=ExtResource("3_d62hk")]
 position = Vector2(576, 208)

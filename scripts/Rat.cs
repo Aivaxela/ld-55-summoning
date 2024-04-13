@@ -32,7 +32,7 @@ public partial class Rat : CharacterBody2D
     {
         if (cat.isSpotted == true)
         {
-            speed = -500;
+            speed = -300;
         }
         else
         {
