@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://6y1rojffxkjp"]
+
+[ext_resource type="Script" path="res://scripts/Spawner.cs" id="1_ce8rc"]
+[ext_resource type="PackedScene" uid="uid://cfnabfs3pmu04" path="res://scenes/energy-pickup-floating.tscn" id="2_elwr0"]
+
+[node name="spawner-floating-energy" type="Marker2D" node_paths=PackedStringArray("timeUntilSpawnTimer")]
+script = ExtResource("1_ce8rc")
+spawnRateMin = 3
+spawnRateMax = 4
+spawnScene = Array[PackedScene]([ExtResource("2_elwr0")])
+timeUntilSpawnTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="."]

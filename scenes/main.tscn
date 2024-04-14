@@ -1,20 +1,26 @@
-[gd_scene load_steps=10 format=3 uid="uid://ppbt3vser848"]
+[gd_scene load_steps=12 format=3 uid="uid://ppbt3vser848"]
 
 [ext_resource type="Script" path="res://scripts/Main.cs" id="1_h1g2k"]
 [ext_resource type="PackedScene" uid="uid://d1643t4upp0yh" path="res://scenes/parallax-background.tscn" id="2_l6qu2"]
 [ext_resource type="Script" path="res://scripts/Spawner.cs" id="2_mdxv1"]
+[ext_resource type="Texture2D" uid="uid://u0mg10nc0h0u" path="res://images/energy-bar.png" id="2_r0hns"]
 [ext_resource type="PackedScene" uid="uid://cn8hhq82a72iv" path="res://scenes/cat.tscn" id="3_b5wxr"]
-[ext_resource type="PackedScene" uid="uid://c3wsfhd26dehs" path="res://scenes/spawner-rat.tscn" id="3_d62hk"]
 [ext_resource type="PackedScene" uid="uid://cfg0otno8mxwe" path="res://scenes/rat.tscn" id="3_n5fdx"]
 [ext_resource type="PackedScene" uid="uid://c2uf6utspfbna" path="res://scenes/counter-top.tscn" id="3_o3iws"]
+[ext_resource type="PackedScene" uid="uid://cfnabfs3pmu04" path="res://scenes/energy-pickup-floating.tscn" id="4_88mek"]
 [ext_resource type="PackedScene" uid="uid://dcgralcjhhamn" path="res://scenes/couch.tscn" id="6_v0m3l"]
+[ext_resource type="PackedScene" uid="uid://doavvlddla6xu" path="res://scenes/cat-burgler.tscn" id="11_dye4y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_73tsn"]
 size = Vector2(960, 48)
 
-[node name="main" type="Node" node_paths=PackedStringArray("ratsCollectedLabel")]
+[node name="main" type="Node" node_paths=PackedStringArray("ratsCollectedLabel", "energyRefillTimer", "energyBar")]
 script = ExtResource("1_h1g2k")
 ratsCollectedLabel = NodePath("ratsCollecteedLabel")
+energyRefillTimer = NodePath("summon-energy/energy-idle-refill")
+energyBar = NodePath("summon-energy")
+
+[node name="main-camera" type="Camera2D" parent="."]
 
 [node name="ratsCollecteedLabel" type="Label" parent="."]
 modulate = Color(0, 0, 0, 1)
@@ -24,6 +30,17 @@ offset_right = -232.0
 offset_bottom = -221.0
 theme_override_font_sizes/font_size = 25
 text = "rats collected: 0"
+
+[node name="summon-energy" type="TextureProgressBar" parent="."]
+offset_left = -464.0
+offset_top = -208.0
+offset_right = -266.0
+offset_bottom = -186.0
+value = 80.0
+texture_progress = ExtResource("2_r0hns")
+
+[node name="energy-idle-refill" type="Timer" parent="summon-energy"]
+autostart = true
 
 [node name="floor" type="StaticBody2D" parent="."]
 position = Vector2(-0.5, 252)
@@ -36,15 +53,19 @@ collision_mask = 0
 position = Vector2(0.5, -4)
 shape = SubResource("RectangleShape2D_73tsn")
 
-[node name="main-camera" type="Camera2D" parent="."]
-
 [node name="spawners" type="Node" parent="."]
 
-[node name="spawner-rat" parent="spawners" instance=ExtResource("3_d62hk")]
-position = Vector2(576, 208)
-spawnScene = Array[PackedScene]([ExtResource("3_n5fdx")])
+[node name="spawner-cat-burgler" type="Marker2D" parent="spawners" node_paths=PackedStringArray("timeUntilSpawnTimer")]
+position = Vector2(-576, -216)
+script = ExtResource("2_mdxv1")
+spawnRateMin = 3
+spawnRateMax = 5
+spawnScene = Array[PackedScene]([ExtResource("11_dye4y")])
+timeUntilSpawnTimer = NodePath("Timer")
 
-[node name="spawner" type="Marker2D" parent="spawners" node_paths=PackedStringArray("timeUntilSpawnTimer")]
+[node name="Timer" type="Timer" parent="spawners/spawner-cat-burgler"]
+
+[node name="spawner-obstacles" type="Marker2D" parent="spawners" node_paths=PackedStringArray("timeUntilSpawnTimer")]
 position = Vector2(768, 64)
 script = ExtResource("2_mdxv1")
 spawnRateMin = 2
@@ -52,7 +73,27 @@ spawnRateMax = 4
 spawnScene = Array[PackedScene]([ExtResource("3_o3iws"), ExtResource("6_v0m3l")])
 timeUntilSpawnTimer = NodePath("Timer")
 
-[node name="Timer" type="Timer" parent="spawners/spawner"]
+[node name="Timer" type="Timer" parent="spawners/spawner-obstacles"]
+
+[node name="spawner-rat" type="Marker2D" parent="spawners" node_paths=PackedStringArray("timeUntilSpawnTimer")]
+position = Vector2(576, 192)
+script = ExtResource("2_mdxv1")
+spawnRateMin = 3
+spawnRateMax = 5
+spawnScene = Array[PackedScene]([ExtResource("3_n5fdx")])
+timeUntilSpawnTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="spawners/spawner-rat"]
+
+[node name="spawner-floating-energy" type="Marker2D" parent="spawners" node_paths=PackedStringArray("timeUntilSpawnTimer")]
+position = Vector2(576, -216)
+script = ExtResource("2_mdxv1")
+spawnRateMin = 5
+spawnRateMax = 10
+spawnScene = Array[PackedScene]([ExtResource("4_88mek")])
+timeUntilSpawnTimer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="spawners/spawner-floating-energy"]
 
 [node name="cat" parent="." instance=ExtResource("3_b5wxr")]
 position = Vector2(-380, 136)

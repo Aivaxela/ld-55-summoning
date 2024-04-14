@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cn8hhq82a72iv"]
+[gd_scene load_steps=12 format=3 uid="uid://cn8hhq82a72iv"]
 
 [ext_resource type="Script" path="res://scripts/Cat.cs" id="1_c5kb1"]
 [ext_resource type="Texture2D" uid="uid://cutlb200j2fmf" path="res://images/cat-black.png" id="1_fh4p2"]
 [ext_resource type="Texture2D" uid="uid://iyc43irusdcx" path="res://images/cat-spotted.png" id="2_5udj7"]
+[ext_resource type="Texture2D" uid="uid://c4li6b4qcx8ef" path="res://images/cat-poofy-1.png" id="4_7pfsb"]
+[ext_resource type="Texture2D" uid="uid://bang0cimbhxr6" path="res://images/cat-poofy-2.png" id="5_6kmvo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1duu"]
 size = Vector2(96, 40)
@@ -37,15 +39,71 @@ tracks/1/keys = {
 "values": [0.0, 0.174533, -0.0872665, 0.0]
 }
 
+[sub_resource type="Animation" id="Animation_k40ao"]
+resource_name = "jumping-up"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.392699]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_kiui7"]
+resource_name = "falling-down"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.392699]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fkvca"]
 _data = {
+"falling-down": SubResource("Animation_kiui7"),
+"jumping-up": SubResource("Animation_k40ao"),
 "running": SubResource("Animation_dwdig")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_561vr"]
 size = Vector2(96, 40)
 
-[node name="cat" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+[node name="cat" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "animPlayer")]
 z_index = 2
 collision_layer = 0
 collision_mask = 4
@@ -53,6 +111,9 @@ script = ExtResource("1_c5kb1")
 sprite = NodePath("Sprite2D")
 catBlack = ExtResource("1_fh4p2")
 catSpotted = ExtResource("2_5udj7")
+catPoofy1 = ExtResource("4_7pfsb")
+catPoofy2 = ExtResource("5_6kmvo")
+animPlayer = NodePath("AnimationPlayer")
 gravity = 14.0
 jumpStrength = 1200.0
 
@@ -70,7 +131,7 @@ libraries = {
 autoplay = "running"
 
 [node name="obstacle-area" type="Area2D" parent="."]
-collision_layer = 3
+collision_layer = 11
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="obstacle-area"]

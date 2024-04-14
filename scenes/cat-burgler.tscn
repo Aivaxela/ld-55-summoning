@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://doavvlddla6xu"]
+
+[ext_resource type="Script" path="res://scripts/CatBurgler.cs" id="1_mbjhy"]
+[ext_resource type="Texture2D" uid="uid://bqmh8v52xb585" path="res://images/cat-burgler-claw.png" id="2_uxcpl"]
+[ext_resource type="Texture2D" uid="uid://d0cx7rsx8k517" path="res://images/cat-burgler.png" id="3_f0t0p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_81gpg"]
+size = Vector2(42, 23)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gwmm8"]
+size = Vector2(12, 9)
+
+[node name="cat-burgler" type="CharacterBody2D" node_paths=PackedStringArray("area", "claw")]
+z_index = 1
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_mbjhy")
+speed = 350.0
+area = NodePath("claw/Area2D")
+claw = NodePath("claw")
+
+[node name="claw" type="Sprite2D" parent="."]
+position = Vector2(-2, 52)
+texture = ExtResource("2_uxcpl")
+
+[node name="Area2D" type="Area2D" parent="claw"]
+position = Vector2(2, 4)
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="claw/Area2D"]
+position = Vector2(-2, 4)
+shape = SubResource("RectangleShape2D_81gpg")
+debug_color = Color(0.756863, 0.317647, 0.819608, 0.419608)
+
+[node name="body" type="Sprite2D" parent="."]
+texture = ExtResource("3_f0t0p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_gwmm8")
