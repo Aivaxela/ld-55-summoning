@@ -50,7 +50,6 @@ public partial class Obstacle : CharacterBody2D
 
     private void CouchJumpAreaEntered(object _)
     {
-        cat.CouchJumpAreaEntered();
-        couchJumpArea.QueueFree();
+        cat.forcedJump = true;
     }
 }

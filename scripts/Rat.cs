@@ -36,7 +36,7 @@ public partial class Rat : CharacterBody2D
         }
         else
         {
-            speed = 0;
+            speed = -40;
         }
     }
 

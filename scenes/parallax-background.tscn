@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://nbpgt4bmaiss" path="res://images/floor.png" id="2_bnkmg"]
 
 [node name="backgrounds" type="ParallaxBackground"]
-layer = 0
 scroll_offset = Vector2(400, 0)
 script = ExtResource("1_ijv8k")
 xScrollSpeed = 0.4

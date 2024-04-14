@@ -11,6 +11,7 @@ public partial class Cat : CharacterBody2D
     public bool isSpotted = false;
     public Vector2 velocity = Vector2.Zero;
     bool leftCeiling = false;
+    public bool forcedJump = false;
 
     public override void _Ready()
     {
@@ -43,9 +44,10 @@ public partial class Cat : CharacterBody2D
 
     private void ListenForInputs()
     {
-        if (Input.IsActionJustPressed("jump") && IsOnFloor())
+        if (Input.IsActionJustPressed("jump") && IsOnFloor() || forcedJump)
         {
             velocity.Y = 0 - jumpStrength;
+            forcedJump = false;
         }
 
         if (Input.IsActionJustPressed("transform-1"))
@@ -64,6 +66,6 @@ public partial class Cat : CharacterBody2D
 
     public void CouchJumpAreaEntered()
     {
-        GlobalPosition = new Vector2(GlobalPosition.X, 64);
+        forcedJump = true;
     }
 }

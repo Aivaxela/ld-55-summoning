@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Spawner : Marker2D
 {
@@ -28,7 +27,7 @@ public partial class Spawner : Marker2D
 
     private void Spawn()
     {
-        CharacterBody2D newSpawn = (CharacterBody2D)spawnScene[0].Instantiate();
+        CharacterBody2D newSpawn = (CharacterBody2D)spawnScene[GD.RandRange(0, spawnScene.Length - 1)].Instantiate();
         GetParent().AddChild(newSpawn);
         newSpawn.GlobalPosition = GlobalPosition;
     }

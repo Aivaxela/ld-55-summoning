@@ -13,7 +13,7 @@ size = Vector2(262.25, 63)
 radius = 32.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_76xj3"]
-size = Vector2(20, 138)
+size = Vector2(18, 110.5)
 
 [node name="couch" type="CharacterBody2D" node_paths=PackedStringArray("couchJumpArea")]
 collision_layer = 4
@@ -23,30 +23,33 @@ speed = -300.0
 couchJumpArea = NodePath("Area2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 16)
 texture = ExtResource("2_y40hg")
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(152, 72)
+position = Vector2(152, 88)
 shape = SubResource("RectangleShape2D_hr4ww")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
-position = Vector2(154, 120.5)
+position = Vector2(154, 136.5)
 shape = SubResource("RectangleShape2D_owrhd")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-position = Vector2(32, 56)
+position = Vector2(32, 72)
 shape = SubResource("CircleShape2D_tdygu")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
-position = Vector2(272, 56)
+position = Vector2(272, 72)
 shape = SubResource("CircleShape2D_tdygu")
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(-16, 104)
+position = Vector2(-16, 120)
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-24, -8)
+rotation = 0.58343
 shape = SubResource("RectangleShape2D_76xj3")
 debug_color = Color(0.584314, 0.54902, 0, 0.419608)
