@@ -1,10 +1,91 @@
-[gd_scene load_steps=12 format=3 uid="uid://cn8hhq82a72iv"]
+[gd_scene load_steps=23 format=3 uid="uid://cn8hhq82a72iv"]
 
 [ext_resource type="Script" path="res://scripts/Cat.cs" id="1_c5kb1"]
-[ext_resource type="Texture2D" uid="uid://cutlb200j2fmf" path="res://images/cat-black.png" id="1_fh4p2"]
-[ext_resource type="Texture2D" uid="uid://iyc43irusdcx" path="res://images/cat-spotted.png" id="2_5udj7"]
-[ext_resource type="Texture2D" uid="uid://c4li6b4qcx8ef" path="res://images/cat-poofy-1.png" id="4_7pfsb"]
 [ext_resource type="Texture2D" uid="uid://bang0cimbhxr6" path="res://images/cat-poofy-2.png" id="5_6kmvo"]
+[ext_resource type="PackedScene" uid="uid://b1sf6yrxqeg8a" path="res://scenes/cat-attack-attack.tscn" id="7_aoc0a"]
+[ext_resource type="Texture2D" uid="uid://dcuhdamyx8dd3" path="res://images/cat-attack-sheet.png" id="8_w1t1i"]
+[ext_resource type="Texture2D" uid="uid://c2xnr0ce2mils" path="res://images/cat-black-sheet.png" id="9_1ndwo"]
+[ext_resource type="Texture2D" uid="uid://bi5ct11xqbio8" path="res://images/cat-poofy-sheet.png" id="10_mq5fh"]
+[ext_resource type="Texture2D" uid="uid://simo3ttnpnn2" path="res://images/cat-spotted-sheet.png" id="11_vdpjf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2sre3"]
+atlas = ExtResource("8_w1t1i")
+region = Rect2(0, 0, 117, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0pu8x"]
+atlas = ExtResource("8_w1t1i")
+region = Rect2(117, 0, 117, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kv2cg"]
+atlas = ExtResource("9_1ndwo")
+region = Rect2(0, 0, 117, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wt81y"]
+atlas = ExtResource("9_1ndwo")
+region = Rect2(117, 0, 117, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lr3gg"]
+atlas = ExtResource("10_mq5fh")
+region = Rect2(0, 0, 117, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgq5h"]
+atlas = ExtResource("10_mq5fh")
+region = Rect2(117, 0, 117, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1utw"]
+atlas = ExtResource("11_vdpjf")
+region = Rect2(0, 0, 117, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjq8x"]
+atlas = ExtResource("11_vdpjf")
+region = Rect2(117, 0, 117, 56)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h7bwk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2sre3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0pu8x")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kv2cg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wt81y")
+}],
+"loop": true,
+"name": &"black",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lr3gg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jgq5h")
+}],
+"loop": true,
+"name": &"poofy",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d1utw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjq8x")
+}],
+"loop": true,
+"name": &"spotted",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1duu"]
 size = Vector2(96, 40)
@@ -33,6 +114,30 @@ tracks/1/path = NodePath("Sprite2D:rotation")
 tracks/1/interp = 0
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.25, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.174533, -0.0872665, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:scale")
+tracks/2/interp = 0
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.25, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.8, 1.1), Vector2(1.2, 1), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:rotation")
+tracks/3/interp = 0
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.25, 0.35),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
@@ -103,22 +208,31 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_561vr"]
 size = Vector2(96, 40)
 
-[node name="cat" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "animPlayer")]
+[node name="cat" type="CharacterBody2D" node_paths=PackedStringArray("animSprite", "sprite", "animPlayer")]
 z_index = 2
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_c5kb1")
+animSprite = NodePath("AnimatedSprite2D")
 sprite = NodePath("Sprite2D")
-catBlack = ExtResource("1_fh4p2")
-catSpotted = ExtResource("2_5udj7")
-catPoofy1 = ExtResource("4_7pfsb")
-catPoofy2 = ExtResource("5_6kmvo")
 animPlayer = NodePath("AnimationPlayer")
+catAttackAttackScene = ExtResource("7_aoc0a")
 gravity = 14.0
 jumpStrength = 1200.0
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 0.174533
+scale = Vector2(0.8, 1.1)
+sprite_frames = SubResource("SpriteFrames_h7bwk")
+animation = &"poofy"
+autoplay = "black"
+frame_progress = 0.124997
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_fh4p2")
+visible = false
+rotation = 0.174533
+scale = Vector2(0.8, 1.1)
+texture = ExtResource("5_6kmvo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)

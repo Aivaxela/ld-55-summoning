@@ -47,8 +47,9 @@ size = Vector2(40, 18)
 [node name="rat" type="CharacterBody2D" node_paths=PackedStringArray("area") groups=["rat"]]
 z_index = 1
 collision_layer = 0
-collision_mask = 0
+collision_mask = 4
 script = ExtResource("1_lngt0")
+gravity = 14.0
 area = NodePath("Area2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -65,7 +66,7 @@ libraries = {
 autoplay = "running"
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 0
+collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(4, 2)

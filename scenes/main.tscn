@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://doavvlddla6xu" path="res://scenes/cat-burgler.tscn" id="11_dye4y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_73tsn"]
-size = Vector2(960, 48)
+size = Vector2(1824, 48)
 
 [node name="main" type="Node" node_paths=PackedStringArray("ratsCollectedLabel", "energyRefillTimer", "energyBar")]
 script = ExtResource("1_h1g2k")
@@ -50,7 +50,7 @@ collision_mask = 0
 [node name="Sprite2D" type="Sprite2D" parent="floor"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="floor"]
-position = Vector2(0.5, -4)
+position = Vector2(432.5, -4)
 shape = SubResource("RectangleShape2D_73tsn")
 
 [node name="spawners" type="Node" parent="."]
@@ -58,8 +58,8 @@ shape = SubResource("RectangleShape2D_73tsn")
 [node name="spawner-cat-burgler" type="Marker2D" parent="spawners" node_paths=PackedStringArray("timeUntilSpawnTimer")]
 position = Vector2(-576, -216)
 script = ExtResource("2_mdxv1")
-spawnRateMin = 3
-spawnRateMax = 5
+spawnRateMin = 6
+spawnRateMax = 10
 spawnScene = Array[PackedScene]([ExtResource("11_dye4y")])
 timeUntilSpawnTimer = NodePath("Timer")
 
@@ -78,8 +78,8 @@ timeUntilSpawnTimer = NodePath("Timer")
 [node name="spawner-rat" type="Marker2D" parent="spawners" node_paths=PackedStringArray("timeUntilSpawnTimer")]
 position = Vector2(576, 192)
 script = ExtResource("2_mdxv1")
-spawnRateMin = 3
-spawnRateMax = 5
+spawnRateMin = 1
+spawnRateMax = 2
 spawnScene = Array[PackedScene]([ExtResource("3_n5fdx")])
 timeUntilSpawnTimer = NodePath("Timer")
 
@@ -88,8 +88,8 @@ timeUntilSpawnTimer = NodePath("Timer")
 [node name="spawner-floating-energy" type="Marker2D" parent="spawners" node_paths=PackedStringArray("timeUntilSpawnTimer")]
 position = Vector2(576, -216)
 script = ExtResource("2_mdxv1")
-spawnRateMin = 5
-spawnRateMax = 10
+spawnRateMin = 6
+spawnRateMax = 12
 spawnScene = Array[PackedScene]([ExtResource("4_88mek")])
 timeUntilSpawnTimer = NodePath("Timer")
 

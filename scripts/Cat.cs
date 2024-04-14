@@ -4,12 +4,10 @@ using Godot;
 
 public partial class Cat : CharacterBody2D
 {
-    [Export] public Sprite2D sprite;
-    [Export] Texture2D catBlack;
-    [Export] Texture2D catSpotted;
-    [Export] Texture2D catPoofy1;
-    [Export] Texture2D catPoofy2;
+    [Export] public AnimatedSprite2D animSprite;
+    [Export] Sprite2D sprite;
     [Export] AnimationPlayer animPlayer;
+    [Export] PackedScene catAttackAttackScene;
     [Export] float gravity;
     [Export] public float jumpStrength;
     Main main;
@@ -60,12 +58,13 @@ public partial class Cat : CharacterBody2D
                 velocity.Y = 0 - jumpStrength;
                 forcedJump = false;
             }
-            else if (hasExtraJump && sprite.Texture == catPoofy1)
+            else if (hasExtraJump && animSprite.Animation == "poofy")
             {
                 velocity.Y = 0 - jumpStrength;
                 forcedJump = false;
                 hasExtraJump = false;
-                sprite.Texture = catPoofy2;
+                sprite.Visible = true;
+                animSprite.Visible = false;
             }
 
         }
@@ -75,28 +74,8 @@ public partial class Cat : CharacterBody2D
             forcedJump = false;
         }
 
-        if (Input.IsActionJustPressed("transform-1"))
-        {
-            if (sprite.Texture == catBlack) return;
-            sprite.Texture = catBlack;
-            isSpotted = false;
-        }
-        if (Input.IsActionJustPressed("transform-2"))
-        {
-            if (sprite.Texture == catSpotted) return;
-            if (main.energy < 20) return;
-            sprite.Texture = catSpotted;
-            isSpotted = true;
-            main.energy -= 20;
-        }
-        if (Input.IsActionJustPressed("transform-3"))
-        {
-            if (sprite.Texture == catPoofy1) return;
-            if (main.energy < 20) return;
-            sprite.Texture = catPoofy1;
-            main.energy -= 20;
-            isSpotted = false;
-        }
+        CatAttackAttack();
+        SummonCat();
     }
 
     public void CouchJumpAreaEntered()
@@ -109,7 +88,12 @@ public partial class Cat : CharacterBody2D
         if (IsOnFloor())
         {
             hasExtraJump = true;
-            if (sprite.Texture == catPoofy2) sprite.Texture = catPoofy1;
+            if (sprite.Visible)
+            {
+                animSprite.Animation = "poofy";
+                animSprite.Visible = true;
+                sprite.Visible = false;
+            }
         }
     }
 
@@ -117,5 +101,62 @@ public partial class Cat : CharacterBody2D
     {
         if (!IsOnFloor()) animPlayer.Play(velocity.Y > 0 ? "falling-down" : "jumping-up");
         else animPlayer.Play("running");
+    }
+
+    private void CatAttackAttack()
+    {
+        if (Input.IsActionJustPressed("cat-attack-attack") && animSprite.Animation == "attack")
+        {
+            CatAttackAttack catAttackAttack = (CatAttackAttack)catAttackAttackScene.Instantiate();
+            GetParent().AddChild(catAttackAttack);
+            catAttackAttack.GlobalPosition = GlobalPosition;
+            catAttackAttack.SetDirAndVel(GetGlobalMousePosition());
+            animSprite.Animation = "black";
+            animSprite.Visible = true;
+            sprite.Visible = false;
+
+        }
+    }
+
+    private void SummonCat()
+    {
+        if (Input.IsActionJustPressed("transform-1"))
+        {
+            if (animSprite.Animation == "black") return;
+            animSprite.Animation = "black";
+            isSpotted = false;
+            animSprite.Visible = true;
+            sprite.Visible = false;
+        }
+        if (Input.IsActionJustPressed("transform-2"))
+        {
+            if (animSprite.Animation == "spotted") return;
+            if (main.energy < 20) return;
+            animSprite.Animation = "spotted";
+            isSpotted = true;
+            main.energy -= 20;
+            animSprite.Visible = true;
+            sprite.Visible = false;
+        }
+        if (Input.IsActionJustPressed("transform-3"))
+        {
+            if (animSprite.Animation == "poofy") return;
+            if (main.energy < 20) return;
+            animSprite.Animation = "poofy";
+            main.energy -= 20;
+            isSpotted = false;
+            animSprite.Visible = true;
+            sprite.Visible = false;
+        }
+        if (Input.IsActionJustPressed("transform-4"))
+        {
+            if (animSprite.Animation == "attack") return;
+            if (main.energy < 20) return;
+            animSprite.Animation = "attack";
+            main.energy -= 20;
+            isSpotted = false;
+            animSprite.Visible = true;
+            sprite.Visible = false;
+        }
     }
 }

@@ -1,13 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcgralcjhhamn"]
+[gd_scene load_steps=6 format=3 uid="uid://dcgralcjhhamn"]
 
 [ext_resource type="Script" path="res://scripts/Obstacle.cs" id="1_ci8yp"]
 [ext_resource type="Texture2D" uid="uid://bmp5fl8mt7k7c" path="res://images/couch.png" id="2_y40hg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hr4ww"]
 size = Vector2(188.5, 34)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_owrhd"]
-size = Vector2(262.25, 63)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tdygu"]
 radius = 32.0
@@ -30,10 +27,6 @@ centered = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(152, 88)
 shape = SubResource("RectangleShape2D_hr4ww")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
-position = Vector2(154, 136.5)
-shape = SubResource("RectangleShape2D_owrhd")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2(32, 72)

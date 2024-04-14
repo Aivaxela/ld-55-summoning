@@ -2,7 +2,11 @@ using Godot;
 
 public partial class Rat : CharacterBody2D
 {
-    [Export] public float speed;
+    public enum State { RUNNING, GRABBED }
+    public State currentRatState;
+
+    public float speed;
+    [Export] float gravity;
     [Export] Area2D area;
     Main main;
     Cat cat;
@@ -15,18 +19,40 @@ public partial class Rat : CharacterBody2D
         cat = GetNode<Cat>("/root/main/cat");
         main = GetNode<Main>("/root/main/");
 
+        currentRatState = State.RUNNING;
+
         ratSpawner.canSpawn = false;
         area.AreaEntered += OnAreaEntered;
     }
 
     public override void _Process(double delta)
     {
+        CleanUp();
+
+        switch (currentRatState)
+        {
+            case State.RUNNING:
+                _Process_Running(delta);
+                break;
+            case State.GRABBED:
+                _Process_Grabbed(delta);
+                break;
+        }
+    }
+
+    public void _Process_Running(double delta)
+    {
         AdjustSpeed();
         CalculateVelocity();
         Velocity = velocity;
         MoveAndSlide();
-        CleanUp();
     }
+
+    public void _Process_Grabbed(double delta)
+    {
+        velocity = Vector2.Zero;
+    }
+
 
     private void AdjustSpeed()
     {
@@ -42,6 +68,8 @@ public partial class Rat : CharacterBody2D
 
     private void CalculateVelocity()
     {
+        velocity.Y += gravity;
+        if (IsOnFloor()) velocity.Y = 0;
         velocity.X = speed;
     }
 
@@ -56,7 +84,7 @@ public partial class Rat : CharacterBody2D
         if (GlobalPosition.X <= -1200) DestroyAndReset();
     }
 
-    private void DestroyAndReset()
+    public void DestroyAndReset()
     {
         ratSpawner.canSpawn = true;
         QueueFree();

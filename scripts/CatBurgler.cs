@@ -6,7 +6,6 @@ public partial class CatBurgler : CharacterBody2D
     [Export] public float speed;
     [Export] Area2D area;
     [Export] Sprite2D claw;
-    float clawYPos;
     Main main;
     Cat cat;
     Rat rat;
@@ -30,6 +29,8 @@ public partial class CatBurgler : CharacterBody2D
         MoveAndSlide();
         CleanUp();
         ActivateClaw();
+        FlipSprite();
+        PullRat();
     }
 
     private void CalculateVelocity()
@@ -43,19 +44,27 @@ public partial class CatBurgler : CharacterBody2D
         velocity.X = RatLocation() > GlobalPosition.X ? speed : -speed;
     }
 
-    private void OnAreaEntered(object _)
+    private void OnAreaEntered(Area2D area)
     {
-        main.IncreaseRatPoints(1);
-        DestroyAndReset();
+        Rat rat = (Rat)area.GetParent();
+        rat.currentRatState = Rat.State.GRABBED;
     }
 
     private void CleanUp()
     {
-        if (GlobalPosition.X <= -1200) DestroyAndReset();
+        if (GlobalPosition.X <= -1200 || GlobalPosition.X >= 800) DestroyAndReset();
     }
 
     private void DestroyAndReset()
     {
+        rat.DestroyAndReset();
+        catBurgSpawner.canSpawn = true;
+        QueueFree();
+    }
+
+    public void HitByCatAttack()
+    {
+        rat.currentRatState = Rat.State.RUNNING;
         catBurgSpawner.canSpawn = true;
         QueueFree();
     }
@@ -68,16 +77,41 @@ public partial class CatBurgler : CharacterBody2D
 
     private void ActivateClaw()
     {
-        if (rat != null && rat.GlobalPosition.X > 400)
+        if (rat == null || rat.currentRatState == Rat.State.GRABBED)
         {
-            clawYPos = Mathf.Lerp(claw.GlobalPosition.Y, rat.GlobalPosition.Y, 1f);
-            claw.GlobalPosition = new Vector2(GlobalPosition.X, clawYPos);
+            RetractClaw();
         }
-        else
+
+        else if (rat != null && rat.GlobalPosition.X < 400)
         {
-            GD.Print("this");
-            clawYPos = Mathf.Lerp(claw.GlobalPosition.Y, GlobalPosition.Y, 1f);
-            claw.Position = new Vector2(-2, 52);
+            SendClaw();
         }
+    }
+
+    private void RetractClaw()
+    {
+        Vector2 clawOrigPos = new Vector2(-2, 52);
+        claw.Position = new Vector2(claw.Position.X, Mathf.Lerp(claw.Position.Y, clawOrigPos.Y, 0.01f));
+    }
+
+    private void SendClaw()
+    {
+        Vector2 direction = (rat.GlobalPosition - claw.GlobalPosition).Normalized();
+        Vector2 movement = direction * 1.1f;
+        claw.GlobalPosition += movement;
+    }
+
+    private void PullRat()
+    {
+        if (rat == null) return;
+        if (rat.currentRatState != Rat.State.GRABBED) return;
+        rat.GlobalPosition = claw.GlobalPosition;
+    }
+
+    private void FlipSprite()
+    {
+        Sprite2D sprite = GetNode<Sprite2D>("body");
+        if (velocity.X > 0) sprite.FlipH = true;
+        else sprite.FlipH = false;
     }
 }
