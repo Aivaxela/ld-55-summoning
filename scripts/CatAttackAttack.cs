@@ -7,6 +7,7 @@ public partial class CatAttackAttack : CharacterBody2D
     [Export] GpuParticles2D dazedCatParticles;
     Vector2 velocity;
     Vector2 direction;
+    [Export] AudioStreamPlayer attackHitSFX;
 
     public override void _Ready()
     {
@@ -14,7 +15,7 @@ public partial class CatAttackAttack : CharacterBody2D
         area.AreaEntered += OnAreaEntered;
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         velocity = direction * 1000f;
         Velocity = velocity;
@@ -33,6 +34,9 @@ public partial class CatAttackAttack : CharacterBody2D
 
     private void OnAreaEntered(Area2D area)
     {
+        RemoveChild(attackHitSFX);
+        GetParent().AddChild(attackHitSFX);
+        attackHitSFX.Play();
         CatBurgler catBurg = (CatBurgler)area.GetParent();
         catBurg.HitByCatAttack();
         RemoveChild(dazedCatParticles);

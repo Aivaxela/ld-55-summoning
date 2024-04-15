@@ -8,6 +8,7 @@ public partial class Rat : CharacterBody2D
     public float speed;
     [Export] float gravity;
     [Export] Area2D area;
+    [Export] AudioStreamPlayer ratEatSFX;
     Main main;
     Cat cat;
     Spawner ratSpawner;
@@ -25,7 +26,7 @@ public partial class Rat : CharacterBody2D
         area.AreaEntered += OnAreaEntered;
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         CleanUp();
 
@@ -56,7 +57,7 @@ public partial class Rat : CharacterBody2D
 
     private void AdjustSpeed()
     {
-        if (cat.isSpotted == true)
+        if (cat.isFastAfBoi == true)
         {
             speed = -300;
         }
@@ -76,6 +77,9 @@ public partial class Rat : CharacterBody2D
     private void OnAreaEntered(object _)
     {
         main.IncreaseRatPoints(1);
+        RemoveChild(ratEatSFX);
+        GetParent().AddChild(ratEatSFX);
+        ratEatSFX.Play();
         DestroyAndReset();
     }
 

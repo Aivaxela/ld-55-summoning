@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cfg0otno8mxwe"]
+[gd_scene load_steps=8 format=3 uid="uid://cfg0otno8mxwe"]
 
 [ext_resource type="Script" path="res://scripts/Rat.cs" id="1_lngt0"]
 [ext_resource type="Texture2D" uid="uid://by57nd5ud1iit" path="res://images/rat.png" id="1_w4v0u"]
+[ext_resource type="AudioStream" uid="uid://1sjaq0kbot17" path="res://sfx/rat-eat.wav" id="3_lcomv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gwmm8"]
 size = Vector2(40, 18)
@@ -44,13 +45,14 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_81gpg"]
 size = Vector2(40, 18)
 
-[node name="rat" type="CharacterBody2D" node_paths=PackedStringArray("area") groups=["rat"]]
+[node name="rat" type="CharacterBody2D" node_paths=PackedStringArray("area", "ratEatSFX") groups=["rat"]]
 z_index = 1
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_lngt0")
 gravity = 14.0
 area = NodePath("Area2D")
+ratEatSFX = NodePath("AudioStreamPlayer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_w4v0u")
@@ -72,3 +74,6 @@ collision_layer = 16
 position = Vector2(4, 2)
 shape = SubResource("RectangleShape2D_81gpg")
 debug_color = Color(0.756863, 0.317647, 0.819608, 0.419608)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_lcomv")

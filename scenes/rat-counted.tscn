@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://brapk0cvi7i4h"]
+
+[ext_resource type="Texture2D" uid="uid://by57nd5ud1iit" path="res://images/rat.png" id="1_o850f"]
+
+[node name="rat-counted" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_o850f")

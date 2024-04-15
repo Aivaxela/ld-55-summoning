@@ -1,24 +1,37 @@
-[gd_scene load_steps=12 format=3 uid="uid://ppbt3vser848"]
+[gd_scene load_steps=16 format=3 uid="uid://ppbt3vser848"]
 
 [ext_resource type="Script" path="res://scripts/Main.cs" id="1_h1g2k"]
 [ext_resource type="PackedScene" uid="uid://d1643t4upp0yh" path="res://scenes/parallax-background.tscn" id="2_l6qu2"]
 [ext_resource type="Script" path="res://scripts/Spawner.cs" id="2_mdxv1"]
 [ext_resource type="Texture2D" uid="uid://u0mg10nc0h0u" path="res://images/energy-bar.png" id="2_r0hns"]
+[ext_resource type="Texture2D" uid="uid://dqr7y4356uofw" path="res://images/energy-bar-notready.png" id="3_0ojaa"]
 [ext_resource type="PackedScene" uid="uid://cn8hhq82a72iv" path="res://scenes/cat.tscn" id="3_b5wxr"]
 [ext_resource type="PackedScene" uid="uid://cfg0otno8mxwe" path="res://scenes/rat.tscn" id="3_n5fdx"]
 [ext_resource type="PackedScene" uid="uid://c2uf6utspfbna" path="res://scenes/counter-top.tscn" id="3_o3iws"]
 [ext_resource type="PackedScene" uid="uid://cfnabfs3pmu04" path="res://scenes/energy-pickup-floating.tscn" id="4_88mek"]
-[ext_resource type="PackedScene" uid="uid://dcgralcjhhamn" path="res://scenes/couch.tscn" id="6_v0m3l"]
+[ext_resource type="PackedScene" uid="uid://dcgralcjhhamn" path="res://scenes/couch.tscn" id="6_0ntlc"]
 [ext_resource type="PackedScene" uid="uid://doavvlddla6xu" path="res://scenes/cat-burgler.tscn" id="11_dye4y"]
+[ext_resource type="AudioStream" uid="uid://cerp2l06ptfhb" path="res://sfx/bgm.wav" id="12_kpbft"]
+[ext_resource type="Shader" path="res://scenes/main.gdshader" id="13_lgu4j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_73tsn"]
 size = Vector2(1824, 48)
 
-[node name="main" type="Node" node_paths=PackedStringArray("ratsCollectedLabel", "energyRefillTimer", "energyBar")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vh50c"]
+shader = ExtResource("13_lgu4j")
+shader_parameter/color = Color(0.870588, 0.952941, 0, 1)
+shader_parameter/multiplier = 0.415
+shader_parameter/softness = 1.435
+
+[node name="main" type="Node" node_paths=PackedStringArray("ratsCollectedLabel", "timeLeftLabel", "energyRefillTimer", "gameEndTimer", "energyBar")]
 script = ExtResource("1_h1g2k")
 ratsCollectedLabel = NodePath("ratsCollecteedLabel")
+timeLeftLabel = NodePath("time-left")
 energyRefillTimer = NodePath("summon-energy/energy-idle-refill")
+gameEndTimer = NodePath("Timer")
 energyBar = NodePath("summon-energy")
+energyBarReady = ExtResource("2_r0hns")
+energyBarNotReady = ExtResource("3_0ojaa")
 
 [node name="main-camera" type="Camera2D" parent="."]
 
@@ -30,6 +43,19 @@ offset_right = -232.0
 offset_bottom = -221.0
 theme_override_font_sizes/font_size = 25
 text = "rats collected: 0"
+
+[node name="time-left" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 232.0
+offset_top = -256.0
+offset_right = 464.0
+offset_bottom = -221.0
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 2
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 120.0
+autostart = true
 
 [node name="summon-energy" type="TextureProgressBar" parent="."]
 offset_left = -464.0
@@ -70,7 +96,7 @@ position = Vector2(768, 64)
 script = ExtResource("2_mdxv1")
 spawnRateMin = 2
 spawnRateMax = 4
-spawnScene = Array[PackedScene]([ExtResource("3_o3iws"), ExtResource("6_v0m3l")])
+spawnScene = Array[PackedScene]([ExtResource("6_0ntlc"), ExtResource("3_o3iws")])
 timeUntilSpawnTimer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="spawners/spawner-obstacles"]
@@ -102,3 +128,16 @@ position = Vector2(-380, 136)
 layer = 2
 xScrollSpeed = 1.6
 cat = NodePath("../cat")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_kpbft")
+autoplay = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_vh50c")
+use_parent_material = true
+offset_right = 960.0
+offset_bottom = 540.0
+color = Color(0, 0, 0, 1)

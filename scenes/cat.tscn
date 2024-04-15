@@ -1,12 +1,18 @@
-[gd_scene load_steps=23 format=3 uid="uid://cn8hhq82a72iv"]
+[gd_scene load_steps=36 format=3 uid="uid://cn8hhq82a72iv"]
 
 [ext_resource type="Script" path="res://scripts/Cat.cs" id="1_c5kb1"]
 [ext_resource type="Texture2D" uid="uid://bang0cimbhxr6" path="res://images/cat-poofy-2.png" id="5_6kmvo"]
+[ext_resource type="Texture2D" uid="uid://c2ocwcgll4gys" path="res://images/cat-mini-sheet.png" id="5_chmfp"]
 [ext_resource type="PackedScene" uid="uid://b1sf6yrxqeg8a" path="res://scenes/cat-attack-attack.tscn" id="7_aoc0a"]
 [ext_resource type="Texture2D" uid="uid://dcuhdamyx8dd3" path="res://images/cat-attack-sheet.png" id="8_w1t1i"]
 [ext_resource type="Texture2D" uid="uid://c2xnr0ce2mils" path="res://images/cat-black-sheet.png" id="9_1ndwo"]
+[ext_resource type="Texture2D" uid="uid://b78c4wbcpofrv" path="res://images/cat-transform-fx.png" id="9_juf57"]
 [ext_resource type="Texture2D" uid="uid://bi5ct11xqbio8" path="res://images/cat-poofy-sheet.png" id="10_mq5fh"]
+[ext_resource type="AudioStream" uid="uid://dg5xfdurms8f2" path="res://sfx/cat-attack-attack.wav" id="10_msgdy"]
 [ext_resource type="Texture2D" uid="uid://simo3ttnpnn2" path="res://images/cat-spotted-sheet.png" id="11_vdpjf"]
+[ext_resource type="AudioStream" uid="uid://bunokw5v4yp35" path="res://sfx/transform.wav" id="11_xeuxa"]
+[ext_resource type="AudioStream" uid="uid://bbytj2jde72c0" path="res://sfx/landing.wav" id="12_kkcm7"]
+[ext_resource type="AudioStream" uid="uid://ds5bw48plpna5" path="res://sfx/jump.wav" id="13_wos4l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2sre3"]
 atlas = ExtResource("8_w1t1i")
@@ -23,6 +29,14 @@ region = Rect2(0, 0, 117, 56)
 [sub_resource type="AtlasTexture" id="AtlasTexture_wt81y"]
 atlas = ExtResource("9_1ndwo")
 region = Rect2(117, 0, 117, 56)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tr7t3"]
+atlas = ExtResource("5_chmfp")
+region = Rect2(0, 0, 87, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nv5om"]
+atlas = ExtResource("5_chmfp")
+region = Rect2(87, 0, 87, 42)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lr3gg"]
 atlas = ExtResource("10_mq5fh")
@@ -66,6 +80,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_tr7t3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nv5om")
+}],
+"loop": true,
+"name": &"mini",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_lr3gg")
 }, {
 "duration": 1.0,
@@ -89,6 +114,60 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1duu"]
 size = Vector2(96, 40)
+
+[sub_resource type="Animation" id="Animation_kiui7"]
+resource_name = "falling-down"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.392699]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_k40ao"]
+resource_name = "jumping-up"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.392699]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_dwdig"]
 resource_name = "running"
@@ -144,60 +223,6 @@ tracks/3/keys = {
 "values": [0.0, 0.174533, -0.0872665, 0.0]
 }
 
-[sub_resource type="Animation" id="Animation_k40ao"]
-resource_name = "jumping-up"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-0.392699]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_kiui7"]
-resource_name = "falling-down"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.392699]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fkvca"]
 _data = {
 "falling-down": SubResource("Animation_kiui7"),
@@ -208,7 +233,35 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_561vr"]
 size = Vector2(96, 40)
 
-[node name="cat" type="CharacterBody2D" node_paths=PackedStringArray("animSprite", "sprite", "animPlayer")]
+[sub_resource type="Gradient" id="Gradient_2hj0g"]
+offsets = PackedFloat32Array(0, 0.254717, 0.533019, 0.792453, 1)
+colors = PackedColorArray(1, 1, 1, 0.686275, 1, 0.0901961, 1, 0.509804, 1, 0.431373, 0, 0.317647, 0.0745098, 0.65098, 0, 0.196078, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cx87g"]
+gradient = SubResource("Gradient_2hj0g")
+
+[sub_resource type="Curve" id="Curve_72s60"]
+max_value = 4.0
+_data = [Vector2(0, 2.06593), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_f4qvt"]
+curve = SubResource("Curve_72s60")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dh0ia"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 300.0
+initial_velocity_max = 400.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_f4qvt")
+color_ramp = SubResource("GradientTexture1D_cx87g")
+hue_variation_min = -1.0
+hue_variation_max = 1.0
+
+[node name="cat" type="CharacterBody2D" node_paths=PackedStringArray("animSprite", "sprite", "animPlayer", "obstacleArea", "transformParticles", "catAttackAttackSFX", "catTrasnformSFX", "catLandingSFX", "catJumpSFX")]
 z_index = 2
 collision_layer = 0
 collision_mask = 4
@@ -217,16 +270,23 @@ animSprite = NodePath("AnimatedSprite2D")
 sprite = NodePath("Sprite2D")
 animPlayer = NodePath("AnimationPlayer")
 catAttackAttackScene = ExtResource("7_aoc0a")
-gravity = 14.0
+gravity = 60.0
 jumpStrength = 1200.0
+obstacleArea = NodePath("obstacle-area")
+transformParticles = NodePath("transform-particles")
+catAttackAttackSFX = NodePath("cat-attack-attack")
+catTrasnformSFX = NodePath("cat-transform")
+catLandingSFX = NodePath("cat-landing")
+catJumpSFX = NodePath("cat-jump")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 rotation = 0.174533
 scale = Vector2(0.8, 1.1)
 sprite_frames = SubResource("SpriteFrames_h7bwk")
-animation = &"poofy"
+animation = &"mini"
 autoplay = "black"
-frame_progress = 0.124997
+frame = 1
+frame_progress = 0.89989
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
@@ -245,10 +305,34 @@ libraries = {
 autoplay = "running"
 
 [node name="obstacle-area" type="Area2D" parent="."]
-collision_layer = 11
+collision_layer = 75
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="obstacle-area"]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_561vr")
 debug_color = Color(0.729412, 0.352941, 0.807843, 0.419608)
+
+[node name="transform-particles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 15
+process_material = SubResource("ParticleProcessMaterial_dh0ia")
+texture = ExtResource("9_juf57")
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.9
+trail_lifetime = 0.85
+trail_sections = 2
+trail_section_subdivisions = 2
+
+[node name="cat-attack-attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_msgdy")
+
+[node name="cat-transform" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_xeuxa")
+
+[node name="cat-landing" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_kkcm7")
+
+[node name="cat-jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_wos4l")

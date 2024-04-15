@@ -1,5 +1,3 @@
-using System.Data.Common;
-using System.Net.NetworkInformation;
 using Godot;
 
 public partial class Cat : CharacterBody2D
@@ -10,19 +8,28 @@ public partial class Cat : CharacterBody2D
     [Export] PackedScene catAttackAttackScene;
     [Export] float gravity;
     [Export] public float jumpStrength;
+    [Export] Area2D obstacleArea;
+    [Export] GpuParticles2D transformParticles;
+    [Export] AudioStreamPlayer catAttackAttackSFX;
+    [Export] AudioStreamPlayer catTrasnformSFX;
+    [Export] AudioStreamPlayer catLandingSFX;
+    [Export] AudioStreamPlayer catJumpSFX;
     Main main;
-    public bool isSpotted = false;
+    public bool isFastAfBoi = false;
     public Vector2 velocity = Vector2.Zero;
     bool leftCeiling = false;
     public bool forcedJump = false;
     bool hasExtraJump = false;
+    uint colLayerInitVal;
+    bool isOnFloorForFirstTime = true;
 
     public override void _Ready()
     {
         main = GetNode<Main>("/root/main/");
+        colLayerInitVal = obstacleArea.CollisionLayer;
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         CalculateVelocity();
         ListenForInputs();
@@ -41,6 +48,11 @@ public partial class Cat : CharacterBody2D
         {
             leftCeiling = false;
             velocity.Y = 0;
+            if (isOnFloorForFirstTime)
+            {
+                catLandingSFX.Play();
+                isOnFloorForFirstTime = false;
+            }
         }
         if (IsOnCeiling() && !leftCeiling)
         {
@@ -57,6 +69,8 @@ public partial class Cat : CharacterBody2D
             {
                 velocity.Y = 0 - jumpStrength;
                 forcedJump = false;
+                catJumpSFX.Play();
+                isOnFloorForFirstTime = true;
             }
             else if (hasExtraJump && animSprite.Animation == "poofy")
             {
@@ -65,13 +79,16 @@ public partial class Cat : CharacterBody2D
                 hasExtraJump = false;
                 sprite.Visible = true;
                 animSprite.Visible = false;
+                catJumpSFX.Play();
+                isOnFloorForFirstTime = true;
             }
-
         }
         if (forcedJump)
         {
             velocity.Y = 0 - jumpStrength;
             forcedJump = false;
+            catJumpSFX.Play();
+            isOnFloorForFirstTime = true;
         }
 
         CatAttackAttack();
@@ -114,7 +131,7 @@ public partial class Cat : CharacterBody2D
             animSprite.Animation = "black";
             animSprite.Visible = true;
             sprite.Visible = false;
-
+            catAttackAttackSFX.Play();
         }
     }
 
@@ -124,19 +141,27 @@ public partial class Cat : CharacterBody2D
         {
             if (animSprite.Animation == "black") return;
             animSprite.Animation = "black";
-            isSpotted = false;
+            isFastAfBoi = false;
             animSprite.Visible = true;
             sprite.Visible = false;
+            obstacleArea.CollisionLayer = colLayerInitVal;
+            jumpStrength = 1200;
+            transformParticles.Restart();
+            catTrasnformSFX.Play();
         }
         if (Input.IsActionJustPressed("transform-2"))
         {
             if (animSprite.Animation == "spotted") return;
             if (main.energy < 20) return;
             animSprite.Animation = "spotted";
-            isSpotted = true;
+            isFastAfBoi = true;
             main.energy -= 20;
             animSprite.Visible = true;
             sprite.Visible = false;
+            obstacleArea.CollisionLayer = colLayerInitVal;
+            jumpStrength = 1200;
+            transformParticles.Restart();
+            catTrasnformSFX.Play();
         }
         if (Input.IsActionJustPressed("transform-3"))
         {
@@ -144,9 +169,13 @@ public partial class Cat : CharacterBody2D
             if (main.energy < 20) return;
             animSprite.Animation = "poofy";
             main.energy -= 20;
-            isSpotted = false;
+            isFastAfBoi = false;
             animSprite.Visible = true;
             sprite.Visible = false;
+            obstacleArea.CollisionLayer = colLayerInitVal;
+            jumpStrength = 1200;
+            transformParticles.Restart();
+            catTrasnformSFX.Play();
         }
         if (Input.IsActionJustPressed("transform-4"))
         {
@@ -154,9 +183,27 @@ public partial class Cat : CharacterBody2D
             if (main.energy < 20) return;
             animSprite.Animation = "attack";
             main.energy -= 20;
-            isSpotted = false;
+            isFastAfBoi = false;
             animSprite.Visible = true;
             sprite.Visible = false;
+            obstacleArea.CollisionLayer = colLayerInitVal;
+            jumpStrength = 1200;
+            transformParticles.Restart();
+            catTrasnformSFX.Play();
+        }
+        if (Input.IsActionJustPressed("transform-5"))
+        {
+            if (animSprite.Animation == "mini") return;
+            if (main.energy < 20) return;
+            animSprite.Animation = "mini";
+            main.energy -= 20;
+            isFastAfBoi = true;
+            animSprite.Visible = true;
+            sprite.Visible = false;
+            obstacleArea.CollisionLayer = colLayerInitVal - 2;
+            jumpStrength = 600;
+            transformParticles.Restart();
+            catTrasnformSFX.Play();
         }
     }
 }

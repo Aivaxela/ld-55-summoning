@@ -1,0 +1,143 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhd76t4apxdif"]
+
+[ext_resource type="Script" path="res://scripts/Menu.cs" id="1_mv8sv"]
+[ext_resource type="Texture2D" uid="uid://dhoiutqcixjas" path="res://images/menu.png" id="1_t03ps"]
+[ext_resource type="FontFile" uid="uid://b8vg11rg4ol1q" path="res://fonts/cat_comic/Cat Comic.otf" id="2_bi0r0"]
+
+[node name="Menu" type="Node2D" node_paths=PackedStringArray("goButton")]
+script = ExtResource("1_mv8sv")
+goButton = NodePath("Button")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_t03ps")
+centered = false
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 712.0
+offset_top = 160.0
+offset_right = 869.0
+offset_bottom = 237.0
+theme_override_fonts/font = ExtResource("2_bi0r0")
+text = "#5 - Mini cat:
+can go under couches +
+real fast +
+can't jump high -"
+horizontal_alignment = 2
+
+[node name="Label6" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 312.0
+offset_top = 104.0
+offset_right = 469.0
+offset_bottom = 181.0
+theme_override_fonts/font = ExtResource("2_bi0r0")
+text = "Cat burgler:
+- steals your rats"
+
+[node name="Label3" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 112.0
+offset_top = 160.0
+offset_right = 270.0
+offset_bottom = 237.0
+theme_override_fonts/font = ExtResource("2_bi0r0")
+text = "#2 - Spotted cat:
++ real fast"
+
+[node name="Label2" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 108.0
+offset_top = 31.0
+offset_right = 266.0
+offset_bottom = 108.0
+theme_override_fonts/font = ExtResource("2_bi0r0")
+text = "#1 - Black cat:
++ free to summon"
+
+[node name="Label4" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 112.0
+offset_top = 280.0
+offset_right = 270.0
+offset_bottom = 357.0
+theme_override_fonts/font = ExtResource("2_bi0r0")
+text = "#3 - Poofy cat:
++ can double jump"
+
+[node name="Label9" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 256.0
+offset_top = 464.0
+offset_right = 455.0
+offset_bottom = 541.0
+theme_override_fonts/font = ExtResource("2_bi0r0")
+text = "Knock over stuff on counters
+to gain summoning energy"
+
+[node name="Label10" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 720.0
+offset_top = 432.0
+offset_right = 951.0
+offset_bottom = 509.0
+theme_override_fonts/font = ExtResource("2_bi0r0")
+text = "See how many rats you can catch!"
+
+[node name="Label5" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 688.0
+offset_top = 32.0
+offset_right = 853.0
+offset_bottom = 109.0
+theme_override_fonts/font = ExtResource("2_bi0r0")
+text = "#4 - Striped cat:
+can attack the burgler +"
+horizontal_alignment = 2
+
+[node name="Label7" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 486.0
+offset_top = 92.0
+offset_right = 651.0
+offset_bottom = 169.0
+theme_override_fonts/font = ExtResource("2_bi0r0")
+text = "Treats:
++ refills energy needed
+to summon cats"
+horizontal_alignment = 2
+
+[node name="Label11" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = 656.0
+offset_top = 384.0
+offset_right = 821.0
+offset_bottom = 461.0
+theme_override_fonts/font = ExtResource("2_bi0r0")
+theme_override_font_sizes/font_size = 45
+text = "GOAL:"
+horizontal_alignment = 2
+
+[node name="Label8" type="Label" parent="."]
+modulate = Color(0.827451, 0, 0, 1)
+offset_left = 312.0
+offset_top = 160.0
+offset_right = 663.38
+offset_bottom = 283.815
+theme_override_fonts/font = ExtResource("2_bi0r0")
+text = "Controls:
+* 1-5 switch between cats
+* space to jump
+* mouse-click to attack when playing striped cat"
+autowrap_mode = 1
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(0.454902, 0, 0.792157, 1)
+offset_left = 312.0
+offset_top = 256.0
+offset_right = 627.0
+offset_bottom = 306.0
+theme_override_fonts/font = ExtResource("2_bi0r0")
+theme_override_font_sizes/font_size = 40
+text = "Click here to play!"
+flat = true

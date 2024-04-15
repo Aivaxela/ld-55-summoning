@@ -1,4 +1,3 @@
-using System;
 using Godot;
 
 public partial class CatBurgler : CharacterBody2D
@@ -22,7 +21,7 @@ public partial class CatBurgler : CharacterBody2D
         area.AreaEntered += OnAreaEntered;
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         CalculateVelocity();
         Velocity = velocity;
@@ -97,7 +96,7 @@ public partial class CatBurgler : CharacterBody2D
     private void SendClaw()
     {
         Vector2 direction = (rat.GlobalPosition - claw.GlobalPosition).Normalized();
-        Vector2 movement = direction * 1.1f;
+        Vector2 movement = direction * 3.1f;
         claw.GlobalPosition += movement;
     }
 

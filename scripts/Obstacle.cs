@@ -14,18 +14,19 @@ public partial class Obstacle : CharacterBody2D
         if (couchJumpArea != null) couchJumpArea.AreaEntered += CouchJumpAreaEntered;
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         AdjustSpeed();
         CalculateVelocity();
         Velocity = velocity;
         MoveAndSlide();
         CleanUp();
+
     }
 
     private void AdjustSpeed()
     {
-        if (cat.isSpotted == true)
+        if (cat.isFastAfBoi == true)
         {
             speed = -500;
         }

@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://b05aicibyiaf6"]
+
+[ext_resource type="Script" path="res://scripts/EnergyPickup.cs" id="1_soi7h"]
+[ext_resource type="Texture2D" uid="uid://b5r6njumchmkl" path="res://images/couch-treat.png" id="2_eg3k7"]
+[ext_resource type="AudioStream" uid="uid://docvsih2ybxu6" path="res://sfx/energy-aquire.wav" id="3_2w7d6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gwmm8"]
+size = Vector2(40, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_81gpg"]
+size = Vector2(40, 23)
+
+[node name="couch-treat" type="CharacterBody2D" node_paths=PackedStringArray("area", "pickupSFX")]
+z_index = 1
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_soi7h")
+area = NodePath("Area2D")
+pickupSFX = NodePath("AudioStreamPlayer")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_eg3k7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gwmm8")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, -8)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(2, 6)
+shape = SubResource("RectangleShape2D_81gpg")
+debug_color = Color(0.756863, 0.317647, 0.819608, 0.419608)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_2w7d6")

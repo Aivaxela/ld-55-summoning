@@ -1,44 +1,28 @@
 using Godot;
-using System;
 
 public partial class EnergyPickup : CharacterBody2D
 {
     [Export] public float speed;
     [Export] Area2D area;
+    [Export] AudioStreamPlayer pickupSFX;
     Main main;
     Cat cat;
-    Spawner floatingEnergySpawner;
     public Vector2 velocity = Vector2.Zero;
 
     public override void _Ready()
     {
         cat = GetNode<Cat>("/root/main/cat");
         main = GetNode<Main>("/root/main/");
-        floatingEnergySpawner = GetNode<Spawner>("/root/main/spawners/spawner-floating-energy");
 
-        floatingEnergySpawner.canSpawn = false;
         area.AreaEntered += OnAreaEntered;
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
-        AdjustSpeed();
         CalculateVelocity();
         Velocity = velocity;
         MoveAndSlide();
         CleanUp();
-    }
-
-    private void AdjustSpeed()
-    {
-        if (cat.isSpotted == true)
-        {
-            speed = -200;
-        }
-        else
-        {
-            speed = -100;
-        }
     }
 
     private void CalculateVelocity()
@@ -48,6 +32,9 @@ public partial class EnergyPickup : CharacterBody2D
 
     private void OnAreaEntered(object _)
     {
+        RemoveChild(pickupSFX);
+        GetParent().AddChild(pickupSFX);
+        pickupSFX.Play();
         main.energy += 40;
         DestroyAndReset();
     }
@@ -58,7 +45,6 @@ public partial class EnergyPickup : CharacterBody2D
 
     private void DestroyAndReset()
     {
-        floatingEnergySpawner.canSpawn = true;
         QueueFree();
     }
 }

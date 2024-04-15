@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cfnabfs3pmu04"]
+[gd_scene load_steps=8 format=3 uid="uid://cfnabfs3pmu04"]
 
 [ext_resource type="Script" path="res://scripts/EnergyPickup.cs" id="1_yoxjx"]
 [ext_resource type="Texture2D" uid="uid://bi34hl7ncia2e" path="res://images/balloon-treat.png" id="2_60xam"]
+[ext_resource type="AudioStream" uid="uid://docvsih2ybxu6" path="res://sfx/energy-aquire.wav" id="3_cyisb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gwmm8"]
 size = Vector2(40, 18)
@@ -32,12 +33,14 @@ _data = {
 "floating": SubResource("Animation_3g4tf")
 }
 
-[node name="balloon-treat" type="CharacterBody2D" node_paths=PackedStringArray("area")]
+[node name="balloon-treat" type="CharacterBody2D" node_paths=PackedStringArray("area", "pickupSFX")]
 z_index = 1
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_yoxjx")
+speed = -300.0
 area = NodePath("Area2D")
+pickupSFX = NodePath("AudioStreamPlayer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_60xam")
@@ -61,3 +64,6 @@ libraries = {
 "": SubResource("AnimationLibrary_2v4r0")
 }
 autoplay = "floating"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_cyisb")

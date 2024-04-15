@@ -22,7 +22,7 @@ public partial class ParallaxBackground : Godot.ParallaxBackground
 
     private void AdjustSpeed()
     {
-        if (cat.isSpotted == true)
+        if (cat.isFastAfBoi == true)
         {
             xScrollSpeed = 2.3f;
         }

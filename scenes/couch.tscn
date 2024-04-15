@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcgralcjhhamn"]
+[gd_scene load_steps=8 format=3 uid="uid://dcgralcjhhamn"]
 
 [ext_resource type="Script" path="res://scripts/Obstacle.cs" id="1_ci8yp"]
 [ext_resource type="Texture2D" uid="uid://bmp5fl8mt7k7c" path="res://images/couch.png" id="2_y40hg"]
+[ext_resource type="Script" path="res://scripts/CouchTreatSpawner.cs" id="3_6gcnu"]
+[ext_resource type="PackedScene" uid="uid://b05aicibyiaf6" path="res://scenes/energy-pickup-couch.tscn" id="4_1a07f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hr4ww"]
 size = Vector2(188.5, 34)
@@ -46,3 +48,8 @@ position = Vector2(-24, -8)
 rotation = 0.58343
 shape = SubResource("RectangleShape2D_76xj3")
 debug_color = Color(0.584314, 0.54902, 0, 0.419608)
+
+[node name="couch-pickup" type="Marker2D" parent="."]
+position = Vector2(152, 152)
+script = ExtResource("3_6gcnu")
+couchPickup = ExtResource("4_1a07f")
