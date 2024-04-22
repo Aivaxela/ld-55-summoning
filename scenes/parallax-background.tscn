@@ -1,12 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://d1643t4upp0yh"]
+[gd_scene load_steps=2 format=3 uid="uid://d1643t4upp0yh"]
 
-[ext_resource type="Script" path="res://scripts/ParallaxBackground.cs" id="1_ijv8k"]
 [ext_resource type="Texture2D" uid="uid://nbpgt4bmaiss" path="res://images/floor.png" id="2_bnkmg"]
 
 [node name="backgrounds" type="ParallaxBackground"]
 scroll_offset = Vector2(400, 0)
-script = ExtResource("1_ijv8k")
-xScrollSpeed = 0.4
 
 [node name="bg-1" type="ParallaxLayer" parent="."]
 motion_scale = Vector2(1, 0)
