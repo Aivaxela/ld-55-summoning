@@ -1,6 +1,6 @@
 [gd_scene load_steps=36 format=3 uid="uid://cn8hhq82a72iv"]
 
-[ext_resource type="Script" path="res://scripts/cat.gd" id="1_t3e8q"]
+[ext_resource type="Script" path="res://scripts/Cat.cs" id="1_c5kb1"]
 [ext_resource type="Texture2D" uid="uid://bang0cimbhxr6" path="res://images/cat-poofy-2.png" id="5_6kmvo"]
 [ext_resource type="Texture2D" uid="uid://c2ocwcgll4gys" path="res://images/cat-mini-sheet.png" id="5_chmfp"]
 [ext_resource type="PackedScene" uid="uid://b1sf6yrxqeg8a" path="res://scenes/cat-attack-attack.tscn" id="7_aoc0a"]
@@ -261,11 +261,11 @@ color_ramp = SubResource("GradientTexture1D_cx87g")
 hue_variation_min = -1.0
 hue_variation_max = 1.0
 
-[node name="cat" type="CharacterBody2D" node_paths=PackedStringArray("animSprite", "sprite", "animPlayer", "obstacleArea", "transformParticles", "catAttackAttackSFX", "catTransformSFX", "catLandingSFX", "catJumpSFX")]
+[node name="cat" type="CharacterBody2D" node_paths=PackedStringArray("animSprite", "sprite", "animPlayer", "obstacleArea", "transformParticles", "catAttackAttackSFX", "catTrasnformSFX", "catLandingSFX", "catJumpSFX")]
 z_index = 2
 collision_layer = 0
 collision_mask = 4
-script = ExtResource("1_t3e8q")
+script = ExtResource("1_c5kb1")
 animSprite = NodePath("AnimatedSprite2D")
 sprite = NodePath("Sprite2D")
 animPlayer = NodePath("AnimationPlayer")
@@ -275,7 +275,7 @@ jumpStrength = 1200.0
 obstacleArea = NodePath("obstacle-area")
 transformParticles = NodePath("transform-particles")
 catAttackAttackSFX = NodePath("cat-attack-attack")
-catTransformSFX = NodePath("cat-transform")
+catTrasnformSFX = NodePath("cat-transform")
 catLandingSFX = NodePath("cat-landing")
 catJumpSFX = NodePath("cat-jump")
 
